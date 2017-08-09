@@ -179,7 +179,7 @@
         this.$store.commit('switchSoicalState', 'facebook');
       },
       twClick() {
-         this.$http.get('http://localhost:3000/login/twitter');
+        window.open('http://localhost:3000/login/twitter');
       },
       insClick() {
         this.$store.commit('switchSoicalState', 'instagram');
@@ -191,16 +191,16 @@
         this.$store.commit('switchSoicalState', 'stackoverflow');
       },
       flcClick() {
-        this.$store.commit('switchSoicalState', 'flickr');
+        window.open('http://localhost:3000/login/flickr');
       },
       sptClick() {
-        this.$store.commit('switchSoicalState', 'spotify');
+        window.open('http://localhost:3000/login/spotify');
       },
       redClick() {
-        this.$store.commit('switchSoicalState', 'reddit');
+        window.open('http://localhost:3000/login/reddit');
       },
       youClick() {
-        this.$store.commit('switchSoicalState', 'youtube');
+        window.open('http://localhost:3000/login/youtube');
       },
       pinClick() {
         this.$store.commit('switchSoicalState', 'pinterest');
@@ -209,7 +209,13 @@
         this.$store.commit('switchSoicalState', 'weibo');
       },
       tumblrClick() {
-        this.$store.commit('switchSoicalState', 'tumblr');
+        var win = window.open('http://localhost:3000/login/tumblr');
+        var timer = setInterval(function() {
+            if (win.closed) {
+                clearInterval(timer);
+                location.reload();
+            }
+        }, 500);
       },
     },
     components: {
@@ -217,7 +223,7 @@
       'logoutmodal' : logoutModal,
     },
     mounted: function(){
-      console.log(this.$http.headers.common.withCredentials);
+
       this.$http.get('http://localhost:3000/checkstatus').then(response=>{
         console.log(response.headers);
         console.log(response.body.user);

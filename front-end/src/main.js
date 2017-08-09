@@ -17,8 +17,13 @@ import VueResource from 'vue-resource'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
+
 Vue.use(VueResource);
-Vue.http.options.xhr = {withCredentials: true}
+
+Vue.http.interceptors.push((request, next) => {
+    request.credentials = true;
+    next();
+});
 
 Vue.component('icon', Icon)
 Vue.use(VueGoogleMaps, {
