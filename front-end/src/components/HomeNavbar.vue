@@ -72,8 +72,8 @@
         else{
           this.$store.commit('switchView', 'ls');
         }
-      }
-    }
+      },
+    },   
   }
 </script>
 

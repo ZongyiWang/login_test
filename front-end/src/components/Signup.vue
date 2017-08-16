@@ -35,7 +35,6 @@
             if (response.body.error){
               alert(response.body.error);
             }
-
             else if (!response.body.error && response.body.status == "OK"){
               
               alert("You have successfully registered!!!!!");

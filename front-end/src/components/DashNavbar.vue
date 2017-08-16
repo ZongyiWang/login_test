@@ -21,10 +21,11 @@
     name: 'dashNavbar',
     methods:{
       logout() {
-        this.$http.get('http://localhost:3000/logout');
-        this.$store.commit('switchLoggin', false);
-        this.$store.commit('changeUsername', null);
-        this.$store.commit('switchView', 'home');
+        this.$http.get('http://localhost:3000/logout').then(()=>{
+          this.$store.commit('switchLoggin', false);
+          this.$store.commit('changeUsername', null);
+          this.$store.commit('switchView', 'home');
+        });
       }
     },
     data(){

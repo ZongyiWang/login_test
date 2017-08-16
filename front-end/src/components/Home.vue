@@ -160,8 +160,6 @@
       var logginStatus;
       var username;
       this.$http.get('http://localhost:3000/isloggedIn').then(response => {
-        console.log(response.body.status);
-        console.log(response.body.username);
         if (response.body.status == 'OK' && response.body.username){
           this.$store.commit('switchLoggin', true);
           this.$store.commit('changeUsername', response.body.username); 

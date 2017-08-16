@@ -16,11 +16,11 @@
           <h2> Unauthorized Panel</h2>
         </div>
         <div class="row">
-          <div id = "show-modal" @click = "fbClick()" v-if = "facebook" class="col-sm-4">
+          <div @click = "fbClick()" v-if = "!loginArray['facebook']" class="col-sm-4">
             <icon name="facebook-square" scale = '5' color = "#3B5998"></icon>
             <h4>FACEBOOK</h4>
           </div>
-          <div @click = "twClick()" v-if = "twitter" class="col-sm-4">
+          <div @click = "twClick()" v-if = "!loginArray['twitter']" class="col-sm-4">
             <icon name="twitter-square" scale = '5' color = "#4099FF"></icon>
             <h4>TWITTER</h4>
           </div>
@@ -36,19 +36,19 @@
             <icon name="stack-overflow" scale = '5'></icon>
             <h4>StackOverflow</h4>
           </div>
-          <div @click = "flcClick()" v-if = "flickr" class="col-sm-4">
+          <div @click = "flcClick()" v-if = "!loginArray['flickr']" class="col-sm-4">
             <icon name="flickr" scale = '5' color = "#ff0084"></icon>
             <h4>Flickr</h4>
           </div>
-          <div @click = "sptClick()" v-if = "spotify" class="col-sm-4">
+          <div @click = "sptClick()" v-if = "!loginArray['spotify']" class="col-sm-4">
             <icon name="spotify" scale = '5' color = "#00e461"></icon>
             <h4>Spotify</h4>
           </div>
-          <div @click = "redClick()" v-if = "reddit" class="col-sm-4">
+          <div @click = "redClick()" v-if = "!loginArray['reddit']" class="col-sm-4">
             <icon name="reddit-square" scale = '5' color = "#ff4500"></icon>
             <h4>Reddit</h4>
           </div>
-          <div @click = "youClick()" v-if = "youtube" class="col-sm-4">
+          <div @click = "youClick()" v-if = "!loginArray['youtube']" class="col-sm-4">
             <icon name="youtube-square" scale = '5' color = "#bb0000"></icon>
             <h4>Youtube</h4>
           </div>
@@ -60,7 +60,7 @@
             <icon name="weibo" scale = '5' color = "#FF0000"></icon>
             <h4>Weibo</h4>
           </div>
-          <div @click = "tumblrClick()" v-if = "tumblr" class="col-sm-4">
+          <div @click = "tumblrClick()" v-if = "!loginArray['tumblr']" class="col-sm-4">
             <icon name="tumblr-square" scale = '5' color = "#32506d"></icon>
             <h4>Tumblr</h4>
           </div>
@@ -72,51 +72,51 @@
           <h2> Authorized Panel </h2>
         </div>
         <div class="row">
-          <div id = "show-logoutmodal" @click = "afbClick()" v-if = "!facebook" class="col-sm-4">
+          <div v-if = "loginArray['facebook']" class="col-sm-4">
             <icon name="facebook-square" scale = '5' color = "#3B5998"></icon>
             <h4>FACEBOOK</h4>
           </div>
-          <div @click = "twClick()" v-if = "!twitter" class="col-sm-4">
+          <div v-if = "loginArray['twitter']" class="col-sm-4">
             <icon name="twitter-square" scale = '5' color = "#4099FF"></icon>
             <h4>TWITTER</h4>
           </div>
-          <div @click = "insClick()" v-if = "!instagram" class="col-sm-4">
+          <div v-if = "!instagram" class="col-sm-4">
             <icon name="instagram" scale = '5'></icon>
             <h4>INSTAGRAM</h4>
           </div>
-          <div @click = "wikiClick()" v-if = "!wikimedia" class="col-sm-4">
+          <div v-if = "!wikimedia" class="col-sm-4">
             <icon name="wikipedia-w" scale = '5'></icon>
             <h4>Wikipedia</h4>
           </div>
-          <div @click = "stackClick()" v-if = "!stackoverflow" class="col-sm-4">
+          <div v-if = "!stackoverflow" class="col-sm-4">
             <icon name="stack-overflow" scale = '5'></icon>
             <h4>StackOverflow</h4>
           </div>
-          <div @click = "flcClick()" v-if = "!flickr" class="col-sm-4">
+          <div v-if = "loginArray['flickr']" class="col-sm-4">
             <icon name="flickr" scale = '5' color = "#ff0084"></icon>
             <h4>Flickr</h4>
           </div>
-          <div @click = "sptClick()" v-if = "!spotify" class="col-sm-4">
+          <div v-if = "loginArray['spotify']" class="col-sm-4">
             <icon name="spotify" scale = '5' color = "#00e461"></icon>
             <h4>Spotify</h4>
           </div>
-          <div @click = "redClick()" v-if = "!reddit" class="col-sm-4">
+          <div v-if = "loginArray['reddit']" class="col-sm-4">
             <icon name="reddit-square" scale = '5' color = "#ff4500"></icon>
             <h4>Reddit</h4>
           </div>
-          <div @click = "youClick()" v-if = "!youtube" class="col-sm-4">
+          <div v-if = "loginArray['youtube']" class="col-sm-4">
             <icon name="youtube-square" scale = '5' color = "#bb0000"></icon>
             <h4>Youtube</h4>
           </div>
-          <div @click = "pinClick()" v-if = "!pinterest" class="col-sm-4">
+          <div v-if = "!pinterest" class="col-sm-4">
             <icon name="pinterest-square" scale = '5' color = "#cb2027"></icon>
             <h4>Pinterest</h4>
           </div>
-          <div @click = "weiboClick()" v-if = "!weibo" class="col-sm-4">
+          <div v-if = "!weibo" class="col-sm-4">
             <icon name="weibo" scale = '5' color = "#FF0000"></icon>
             <h4>Weibo</h4>
           </div>
-          <div @click = "tumblrClick()" v-if = "!tumblr" class="col-sm-4">
+          <div v-if = "loginArray['tumblr']" class="col-sm-4">
             <icon name="tumblr-square" scale = '5' color = "#32506d"></icon>
             <h4>Tumblr</h4>
           </div>
@@ -124,62 +124,44 @@
       </div>
     </div>
 
-    <modal v-if="showModal" @close="showModal = false" class = "col-sm-12">
-            <!--
-              you can use custom content here to overwrite
-              default content
-            -->
-    </modal>
-    <logoutmodal v-if="showLogoutModal" @close="showLogoutModal = false" class = "col-sm-12">
-            <!--
-              you can use custom content here to overwrite
-              default content
-            -->
-    </logoutmodal>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import Modal from './Modal';
-  import logoutModal from './logoutModal';
+
 
   export default {
     name: 'dashboard',
     data () {
       return{
-        showModal: false,
-        showLogoutModal: false,
-        loginArray: {}
+        loginArray: {'facebook': false, 'twitter': false, 'flickr': false, 'spotify': false, 'reddit': false, 'youtube': false, 'tumblr': false},
       }
     },
     computed: mapState({
-      facebook: state=>state.facebook,
-      twitter: state=>state.twitter,
       instagram: state=>state.instagram,
       wikimedia: state=>state.wikimedia,
       stackoverflow: state=>state.stackoverflow,
-      flickr: state=>state.flickr,
-      spotify: state=>state.spotify,
-      reddit: state=>state.reddit,
-      youtube: state=>state.youtube,
       pinterest: state=>state.pinterest,
       weibo: state=>state.weibo,
-      tumblr: state=>state.tumblr,
     }),
+
     methods: {
-      fbClick() {
-        console.log(this.showModal);
-        this.showModal = true;
-        console.log(this.showModal);
-        this.$store.commit('switchSoicalState', 'facebook');
+      mainClick: function(choice){
+        var string = 'http://localhost:3000/login/' + choice;
+        var win = window.open(string);
+        var timer = setInterval(function() {
+            if (win.closed) {
+                clearInterval(timer);
+                location.reload();
+            }
+        }, 500);
       },
-      afbClick() {
-        this.showLogoutModal = true
-        this.$store.commit('switchSoicalState', 'facebook');
+      fbClick() {
+        this.mainClick('facebook');
       },
       twClick() {
-        window.open('http://localhost:3000/login/twitter');
+        this.mainClick('twitter');
       },
       insClick() {
         this.$store.commit('switchSoicalState', 'instagram');
@@ -191,16 +173,16 @@
         this.$store.commit('switchSoicalState', 'stackoverflow');
       },
       flcClick() {
-        window.open('http://localhost:3000/login/flickr');
+        this.mainClick('flickr');
       },
       sptClick() {
-        window.open('http://localhost:3000/login/spotify');
+        this.mainClick('spotify');
       },
       redClick() {
-        window.open('http://localhost:3000/login/reddit');
+        this.mainClick('reddit');
       },
       youClick() {
-        window.open('http://localhost:3000/login/youtube');
+        this.mainClick('youtube');
       },
       pinClick() {
         this.$store.commit('switchSoicalState', 'pinterest');
@@ -209,25 +191,13 @@
         this.$store.commit('switchSoicalState', 'weibo');
       },
       tumblrClick() {
-        var win = window.open('http://localhost:3000/login/tumblr');
-        var timer = setInterval(function() {
-            if (win.closed) {
-                clearInterval(timer);
-                location.reload();
-            }
-        }, 500);
+        this.mainClick('tumblr');
       },
     },
-    components: {
-      'modal' : Modal,
-      'logoutmodal' : logoutModal,
-    },
-    mounted: function(){
+
+    created: function(){
 
       this.$http.get('http://localhost:3000/checkstatus').then(response=>{
-        console.log(response.headers);
-        console.log(response.body.user);
-        console.log(response.body.authProviders);
         this.loginArray = response.body.authProviders;
 
       }).then(() => {
@@ -238,7 +208,7 @@
         }
       });
     },
-    created: function () {
+    beforeCreate: function () {
       if (!this.$store.state.currentLoggin){
         this.$store.commit('switchView', 'ls');
         this.$router.push('/login');        
