@@ -17,6 +17,7 @@
   import homeNavbar from './HomeNavbar';
   import lsNavbar from './LSNavbar';
   import dashNavbar from './DashNavbar';
+  import graphqlNavbar from './GraphqlNavbar'
   import { mapState } from 'vuex';
 
 
@@ -29,6 +30,7 @@
       home: homeNavbar,
       ls: lsNavbar,
       dash: dashNavbar,
+      graph: graphqlNavbar,
     },
     methods:{
       homepage(){

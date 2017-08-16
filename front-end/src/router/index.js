@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import DashBoard from '@/components/DashBoard'
+import Graphql from '@/components/Graphql'
 
 Vue.use(Router)
 
@@ -27,7 +28,12 @@ const routes = [
 		path: '/dashboard',
 		name: 'DashBoard',
 		component: DashBoard
-	}
+	},
+	{
+		path:'/graphbuild',
+		name: 'Graphql',
+		component: Graphql
+	},
 ]
 
 

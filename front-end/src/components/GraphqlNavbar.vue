@@ -5,8 +5,8 @@
           <span class="glyphicon glyphicon-user"></span>
           <span style="border:none">Welcome, {{user}}</span>
       </li>     
-      <li @click = "toGraph()">
-        <router-link to = "/graphbuild">GraphQL</router-link>
+      <li @click = "toDashboard()">
+        <router-link to = "/dashboard">Dashboard</router-link>
       </li>
 
       <li @click = "logout()">
@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: 'dashNavbar',
+    name: 'graphqlNavbar',
     methods:{
       logout() {
         this.$http.get('http://localhost:3000/logout').then(()=>{
@@ -30,10 +30,10 @@
           this.$store.commit('switchView', 'home');
         });
       },
-      toGraph() {
+      toDashboard() {
         if (this.$store.state.currentLoggin){
-          this.$store.commit('switchView', 'graph');
-          this.$router.push('/graphbuild');        
+          this.$store.commit('switchView', 'dash');
+          this.$router.push('/dashboard');        
         }
         else{
           this.$store.commit('switchView', 'ls');
@@ -44,8 +44,8 @@
     data(){
 	    return{
         user: this.$store.state.username,
-		 }
-	  },
+		}
+	},
   }
 </script>
 

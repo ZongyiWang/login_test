@@ -8,18 +8,11 @@ const state = {
 	currentView: 'home',
   currentLoggin: false,
   username: null,
-	  facebook: true,
-    twitter: true,
     instagram: true,
     wikimedia: true,
     stackoverflow: true,
-    flickr: true,
-    spotify: true,
-    reddit:true,
-    youtube: true,
     pinterest: true,
     weibo:true,
-    tumblr:true,
 }
 
 const mutations = {
@@ -34,13 +27,7 @@ const mutations = {
   },
   switchSoicalState(state, val){
   	switch(val){
-  		case 'facebook':
-  			state.facebook = !state.facebook;
-  			break;
-  		case 'twitter':
-  			state.twitter = !state.twitter;
-  			break;
- 		case 'instagram':
+ 		   case 'instagram':
   			state.instagram = !state.instagram;
   			break;
   		case 'wikimedia':
@@ -49,26 +36,11 @@ const mutations = {
   		case 'stackoverflow':
   			state.stackoverflow = !state.stackoverflow;
   			break;
-  		case 'flickr':
-  			state.flickr = !state.flickr;
-  			break;
-  		case 'spotify':
-  			state.spotify = !state.spotify;
-  			break;
-  		case 'reddit':
-  			state.reddit = !state.reddit;
-  			break;
-  		case 'youtube':
-  			state.youtube = !state.youtube;
-  			break;
   		case 'pinterest':
   			state.pinterest = !state.pinterest;
   			break;
   		case 'weibo':
   			state.weibo = !state.weibo;
-  			break;
-  		case 'tumblr':
-  			state.tumblr = !state.tumblr;
   			break;
   	}
   }
