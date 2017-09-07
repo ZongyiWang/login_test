@@ -1,0 +1,32 @@
+canvas{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 5px solid #d3d3d3;
+}
+
+p{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#user{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    left: 240px;
+    top: 180px;
+    width: 120px;
+    height: 10px;
+}
+
+#tweet, #geo{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    left: 240px;
+    top: 180px;
+    width: 120px;
+    height: 60px;
+    overflow: auto;
+}

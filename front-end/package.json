@@ -13,6 +13,8 @@
     "bootstrap": "^3.3.7",
     "bootstrap-vue": "^0.12.4",
     "cors": "^2.8.4",
+    "createjs-cmd": "^0.1.0",
+    "createjs-easeljs": "^0.8.2",
     "vue": "^2.2.6",
     "vue-awesome": "^2.2.5",
     "vue-localstorage": "^0.1.3",

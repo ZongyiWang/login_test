@@ -2,14 +2,13 @@
 <template>
   <div>
     <div id="main">
-        <canvas id="myCanvas" width="1200" height="550"></canvas>
+        <canvas id="mythis.canvas" width="1200" height="550"></canvas>
         
         <div id='user'>
             <p>q: <input type='text' style="width: 40%;" @change="getKeyword(this.value)"/></p>
             <p id="common">count: <input type='number' name='count' min='0' style="width: 25%;" value='3' @change="getCount(this.value)"/></p>
             <p>page: <input type='number' name='page' min='0' style="width: 25%;" value='5' @change="getPage(this.value)"/></p>
         </div>
-        
         <div id='tweet'>
             <p>q: <input type='text' style="width: 40%;" @change="getKeyword(this.value)"/></p>
             <p>count: <input type='number' name='count' min='0' style="width: 25%;" @change="getCountTweet(this.value)"/></p>
@@ -58,7 +57,7 @@ export default {
          geoContainer: null,
          rects: null,
          labels: null,
-
+        
          timeline: null,
          friends: null,
          followers: null,
@@ -105,16 +104,14 @@ export default {
       handleClickQueryUser(){
         this.stage.removeAllChildren();
         this.stage.addChild(this.media, this.statica);
-
         var circle = new createjs.Shape();
-        console.log(this.twtUserColor); 
         circle.graphics.beginFill(this.twtUserColor).drawCircle(0, 0, 65);
         circle.x = 250;
         circle.y = 180;
         circle.alpha = 0.5;
-        circle.on("mouseover", this.handleMouseOver);
-        circle.on("mouseout", this.handleMouseOver);
-        circle.on("click", this.drawTwtUserFields);
+        circle.on("mouseover", handleMouseOver);
+        circle.on("mouseout", handleMouseOver);
+        circle.on("click", drawTwtUserFields);
         
         var label = new createjs.Text("queryUser", "20px Arial", "#000");
         label.x = circle.x - 50;
@@ -137,14 +134,13 @@ export default {
         this.queryUserParameters.style.display = "none";
         
         var circle = new createjs.Shape();
-                console.log(this.tweetColor); // => 'updated'
         circle.graphics.beginFill(this.tweetColor).drawCircle(0, 0, 65);
         circle.x = 250;
         circle.y = 180;
         circle.alpha = 0.5;
-        circle.on("mouseover", this.handleMouseOver);
-        circle.on("mouseout", this.handleMouseOver);
-        circle.on("click", this.drawTweetFields);
+        circle.on("mouseover", handleMouseOver);
+        circle.on("mouseout", handleMouseOver);
+        circle.on("click", drawTweetFields);
         
         var label = new createjs.Text("queryTweet", "20px Arial", "#000");
         label.x = circle.x - 50;
@@ -169,16 +165,16 @@ export default {
         circle.x = 250;
         circle.y = 180;
         circle.alpha = 0.5;
-        circle.on("mouseover", this.handleMouseOver);
-        circle.on("mouseout", this.handleMouseOver);
-        circle.on("click", this.drawTwtGeoFields);
+        circle.on("mouseover", handleMouseOver);
+        circle.on("mouseout", handleMouseOver);
+        circle.on("click", drawTwtGeoFields);
         
         var label = new createjs.Text("queryGeo", "20px Arial", "#000");
         label.x = circle.x - 50;
         label.y = circle.y - 35;
         
-        this.txt = "{\n  twitter{\n    queryGeo(){\n" + this.mid + "    }\n  }\n}";
-        this.para.innerHTML = this.txt;
+        this.currHeight = "{\n  twitter{\n    queryGeo(){\n" + this.mid + "    }\n  }\n}";
+        this.para.innerHTML = this.currHeight;
         
         this.stage.addChild(circle, label);
         this.stage.update();
@@ -196,7 +192,7 @@ export default {
         circle.x = label.x = x;
         circle.y = label.y = y;
         circle.alpha = 0.5;
-        circle.on("click", this.changeQuery);
+        circle.on("click", changeQuery);
         container.addChild(circle, label);
       },
 
@@ -221,17 +217,17 @@ export default {
       addBigCircle(x, y, name, color){
         
         if(x > this.currWidth - 55){
-            this.resizeWidth();
+            resizeWidth();
         }
         if(y > this.currHeight){
-            this.resizeHeight();
+            resizeHeight();
         }
         
         var circle = new createjs.Shape();
         circle.graphics.beginFill(color).drawCircle(0, 0, 65);
         circle.alpha = 0.5;
-        circle.on("mouseover", this.handleMouseOver);
-        circle.on("mouseout", this.handleMouseOver);
+        circle.on("mouseover", handleMouseOver);
+        circle.on("mouseout", handleMouseOver);
         
         var label = new createjs.Text(name, "20px Arial", "#000");
         
@@ -242,53 +238,53 @@ export default {
         
         switch(name){
             case "timeline":
-                circle.on("click", this.handleClickTimeline);
+                circle.on("click", handleClickthis.timeline);
                 this.timeline = new createjs.Container();
                 this.timeline.addChild(circle, label);
                 this.stage.addChild(this.timeline);
-                this.addParaCount(x,y);
+                addParaCount(x,y);
                 break;
             
             case "friends":
-                circle.on("click", this.handleClickFriends);
+                circle.on("click", handleClickthis.friends);
                 this.friends = new createjs.Container();
                 this.friends.addChild(circle, label);
                 this.stage.addChild(this.friends);
-                this.addParaCount(x,y);
+                addParaCount(x,y);
                 break;
                 
             case "followers":
-                circle.on("click", this.handleClickFollowers);
+                circle.on("click", handleClickthis.followers);
                 this.followers = new createjs.Container();
                 this.followers.addChild(circle, label);
                 this.stage.addChild(this.followers);
-                this.addParaCount(x,y);
+                addParaCount(x,y);
                 break;
                 
             case "user":
-                circle.on("click", this.handleClickUser);
+                circle.on("click", handleClickUser);
                 this.user = new createjs.Container();
                 this.user.addChild(circle, label);
                 this.stage.addChild(this.user);
                 break;
                 
             case "entities":
-                circle.on("click", this.handleClickEntities);
+                circle.on("click", handleClickEntities);
                 this.entities = new createjs.Container();
                 this.entities.addChild(circle, label);
                 this.stage.addChild(this.entities);
                 break;
                 
             case "retweet":
-                circle.on("click", this.handleClickRetweet);
+                circle.on("click", handleClickRetweet);
                 this.retweet = new createjs.Container();
                 this.retweet.addChild(circle, label);
                 this.stage.addChild(this.retweet);
-                this.addParaCount(x,y);
+                addParaCount(x,y);
                 break;
                 
             case "user_mentions":
-                circle.on("click", this.handleClickUserMentions);
+                circle.on("click", handleClickUserMentions);
                 this.user_mentions = new createjs.Container();
                 this.user_mentions.addChild(circle, label);
                 this.stage.addChild(this.user_mentions);
@@ -346,34 +342,34 @@ export default {
         
         var obj = event.target;
         
-        this.addBigCircle(obj.x + 300, obj.y, "timeline", this.tweetColor);
-        this.addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.timeline);
+        addBigCircle(obj.x + 300, obj.y, "timeline", this.tweetColor);
+        addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.timeline);
         
-        this.addBigCircle(obj.x + 212, obj.y + 212, "friends", this.twtUserColor);
-        this.addArrow(obj.x + 44, obj.y + 44, obj.x + 166, obj.y + 166, this.friends);
+        addBigCircle(obj.x + 212, obj.y + 212, "friends", this.twtUserColor);
+        addArrow(obj.x + 44, obj.y + 44, obj.x + 166, obj.y + 166, this.friends);
         
-        this.addBigCircle(obj.x, obj.y + 300, "followers", "red");
-        this.addArrow(obj.x, obj.y + 65, obj.x, obj.y + 235, this.followers);
+        addBigCircle(obj.x, obj.y + 300, "followers", "red");
+        addArrow(obj.x, obj.y + 65, obj.x, obj.y + 235, this.followers);
         
         this.userContainer = new createjs.Container();
         
         // 16 basic fields
-        this.addSmallCircle(obj.x, obj.y - 95, "id", this.userContainer);
-        this.addSmallCircle(obj.x + 36, obj.y - 88, "id_str", this.userContainer);
-        this.addSmallCircle(obj.x + 67, obj.y - 67, "name", this.userContainer);
-        this.addSmallCircle(obj.x + 88, obj.y - 36, "screen_name", this.userContainer);
-        this.addSmallCircle(obj.x + 95, obj.y, "description", this.userContainer);
-        this.addSmallCircle(obj.x + 88, obj.y + 36, "created_at", this.userContainer);
-        this.addSmallCircle(obj.x + 67, obj.y + 67, "profile_image_url", this.userContainer);
-        this.addSmallCircle(obj.x + 36, obj.y + 88, "url", this.userContainer);
-        this.addSmallCircle(obj.x, obj.y + 95, "location", this.userContainer);
-        this.addSmallCircle(obj.x - 36, obj.y + 88, "tweets_count", this.userContainer);
-        this.addSmallCircle(obj.x - 67, obj.y + 67, "followers_count", this.userContainer);
-        this.addSmallCircle(obj.x - 88, obj.y + 36, "friends_count", this.userContainer);
-        this.addSmallCircle(obj.x - 95, obj.y, "listed_count", this.userContainer);
-        this.addSmallCircle(obj.x - 88, obj.y - 36, "favourites_count", this.userContainer);
-        this.addSmallCircle(obj.x - 67, obj.y - 67, "statuses_count", this.userContainer);
-        this.addSmallCircle(obj.x - 36, obj.y - 88, "time_zone", this.userContainer);
+        addSmallCircle(obj.x, obj.y - 95, "id", this.userContainer);
+        addSmallCircle(obj.x + 36, obj.y - 88, "id_str", this.userContainer);
+        addSmallCircle(obj.x + 67, obj.y - 67, "name", this.userContainer);
+        addSmallCircle(obj.x + 88, obj.y - 36, "screen_name", this.userContainer);
+        addSmallCircle(obj.x + 95, obj.y, "description", this.userContainer);
+        addSmallCircle(obj.x + 88, obj.y + 36, "created_at", this.userContainer);
+        addSmallCircle(obj.x + 67, obj.y + 67, "profile_image_url", this.userContainer);
+        addSmallCircle(obj.x + 36, obj.y + 88, "url", this.userContainer);
+        addSmallCircle(obj.x, obj.y + 95, "location", this.userContainer);
+        addSmallCircle(obj.x - 36, obj.y + 88, "tweets_count", this.userContainer);
+        addSmallCircle(obj.x - 67, obj.y + 67, "followers_count", this.userContainer);
+        addSmallCircle(obj.x - 88, obj.y + 36, "friends_count", this.userContainer);
+        addSmallCircle(obj.x - 95, obj.y, "listed_count", this.userContainer);
+        addSmallCircle(obj.x - 88, obj.y - 36, "favourites_count", this.userContainer);
+        addSmallCircle(obj.x - 67, obj.y - 67, "statuses_count", this.userContainer);
+        addSmallCircle(obj.x - 36, obj.y - 88, "time_zone", this.userContainer);
         
         this.stage.addChild(this.userContainer);
         this.stage.update();
@@ -381,19 +377,19 @@ export default {
 
       drawTwtGeoFields(event){
         var obj = event.target;
-        this.addBigCircle(obj.x + 300, obj.y, "contained_within", this.twtGeoColor);
-        this.addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.contained_within);
+        addBigCircle(obj.x + 300, obj.y, "contained_within", this.twtGeoColor);
+        addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.contained_within);
         
         this.geoContainer = new createjs.Container();
         // 8 basic fields
-        this.addSmallCircle(obj.x, obj.y - 95, "attributes", this.geoContainer);
-        this.addSmallCircle(obj.x + 67, obj.y - 67, "country", this.geoContainer);
-        this.addSmallCircle(obj.x + 95, obj.y, "country_code", this.geoContainer);
-        this.addSmallCircle(obj.x + 67, obj.y + 67, "full_name", this.geoContainer);
-        this.addSmallCircle(obj.x, obj.y + 95, "id", this.geoContainer);
-        this.addSmallCircle(obj.x - 67, obj.y + 67, "name", this.geoContainer);
-        this.addSmallCircle(obj.x - 95, obj.y, "place_type", this.geoContainer);
-        this.addSmallCircle(obj.x - 67, obj.y - 67, "url", this.geoContainer);
+        addSmallCircle(obj.x, obj.y - 95, "attributes", this.geoContainer);
+        addSmallCircle(obj.x + 67, obj.y - 67, "country", this.geoContainer);
+        addSmallCircle(obj.x + 95, obj.y, "country_code", this.geoContainer);
+        addSmallCircle(obj.x + 67, obj.y + 67, "full_name", this.geoContainer);
+        addSmallCircle(obj.x, obj.y + 95, "id", this.geoContainer);
+        addSmallCircle(obj.x - 67, obj.y + 67, "name", this.geoContainer);
+        addSmallCircle(obj.x - 95, obj.y, "place_type", this.geoContainer);
+        addSmallCircle(obj.x - 67, obj.y - 67, "url", this.geoContainer);
         this.stage.addChild(this.geoContainer);
         this.stage.update();
         
@@ -406,36 +402,36 @@ export default {
         this.para.innerHTML = str.substring(0,i) + field + "{ }" + str.substring(i);
       },
 
-      handleClickTimeline(event){
+      handleClicktimeline(event){
         this.stage.removeChild(this.userContainer);
         this.stage.removeChild(this.friends);
         this.stage.removeChild(this.followers);
         this.stage.update();
         
-        this.addBigToQuery("timeline(count:3)");
+        addBigToQuery("timeline(count:3)");
         
-        this.drawTweetFields(event);
+        drawTweetFields(event);
       },
 
-      handleClickFriends(event){
+      handleClickfriends(event){
         this.stage.removeChild(this.userContainer);
         this.stage.removeChild(this.timeline);
         this.stage.removeChild(this.followers);
         this.stage.update();
         
-        this.addBigToQuery("friends(count:3)");
+        addBigToQuery("friends(count:3)");
         
-        this.drawTwtUserFields(event);
+        drawTwtUserFields(event);
       },
 
-      handleClickFollowers(event){
+      handleClickfollowers(event){
         this.stage.removeChild(this.userContainer);
         this.stage.removeChild(this.timeline);
         this.stage.removeChild(this.friends);
         this.stage.update();
         
-        this.addBigToQuery("followers(count:3)");
-        this.drawTwtUserFields(event);
+        addBigToQuery("followers(count:3)");
+        drawTwtUserFields(event);
       },
 
       handleClickUser(event){
@@ -443,16 +439,16 @@ export default {
         this.stage.removeChild(this.entities);
         this.stage.removeChild(this.retweet);
         this.stage.update();
-        this.drawTwtUserFields(event);
+        drawTwtUserFields(event);
       },
 
       handleClickEntities(event){
         this.stage.removeChild(this.tweetContainer);
         this.stage.removeChild(this.user);
-        this.stage.removeChild(this.etweet);
+        this.stage.removeChild(this.retweet);
         this.stage.update();
-        this.addBigToQuery("entities");
-        this.drawTwtEntityFields(event);
+        addBigToQuery("entities");
+        drawTwtEntityFields(event);
       },
 
       handleClickRetweet(event){
@@ -460,15 +456,15 @@ export default {
         this.stage.removeChild(this.user);
         this.stage.removeChild(this.entities);
         this.stage.update();
-        this.addBigToQuery("retweet(count:3)");
-        this.drawRetweetFields(event);
+        addBigToQuery("retweet(count:3)");
+        drawRetweetFields(event);
       },
 
       handleClickUserMentions(event){
         this.stage.removeChild(this.twtEntityContainer);
         this.stage.update();
-        this.addBigToQuery("user_mentions");
-        this.drawTwtUserFields(event);
+        addBigToQuery("user_mentions");
+        drawTwtUserFields(event);
       },
 
       handleClickRetweetedStatus(event){
@@ -476,38 +472,38 @@ export default {
         this.stage.removeChild(this.entities);
         this.stage.removeChild(this.user);
         this.stage.update();
-        this.drawTweetFields(event);       
+        drawTweetFields(event);       
       },
 
       handleClickContainedWithin(event){
         this.stage.removeChild(this.geoContainer);
         this.stage.update();
-        this.drawTwtGeoFields(event);
+        drawTwtGeoFields(event);
       },
 
       drawTweetFields(event){
         
         var obj = event.target;
         
-        this.addBigCircle(obj.x + 300, obj.y, "user", "red");
-        this.addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.user);
+        addBigCircle(obj.x + 300, obj.y, "user", "red");
+        addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.user);
         
-        this.addBigCircle(obj.x + 212, obj.y + 212, "entities", "yellow");
-        this.addArrow(obj.x + 44, obj.y + 44, obj.x + 166, obj.y + 166, this.entities);
+        addBigCircle(obj.x + 212, obj.y + 212, "entities", "yellow");
+        addArrow(obj.x + 44, obj.y + 44, obj.x + 166, obj.y + 166, this.entities);
         
-        this.addBigCircle(obj.x, obj.y + 300, "retweet", "green");
-        this.addArrow(obj.x, obj.y + 65, obj.x, obj.y + 235, this.retweet);
+        addBigCircle(obj.x, obj.y + 300, "retweet", "green");
+        addArrow(obj.x, obj.y + 65, obj.x, obj.y + 235, this.retweet);
         this.tweetContainer = new createjs.Container();
         
         // 8 basic fields
-        this.addSmallCircle(obj.x, obj.y - 95, "id", this.tweetContainer);
-        this.addSmallCircle(obj.x + 67, obj.y - 67, "id_str", this.tweetContainer);
-        this.addSmallCircle(obj.x + 95, obj.y, "created_at", this.tweetContainer);
-        this.addSmallCircle(obj.x + 67, obj.y + 67, "text", this.tweetContainer);
-        this.addSmallCircle(obj.x, obj.y + 95, "retweet_count", this.tweetContainer);
-        this.addSmallCircle(obj.x - 67, obj.y + 67, "in_reply_to_user_id_str", this.tweetContainer);
-        this.addSmallCircle(obj.x - 95, obj.y, "in_reply_to_status_id_str", this.tweetContainer);
-        this.addSmallCircle(obj.x - 67, obj.y - 67, "in_reply_to_screen_name", this.tweetContainer);
+        addSmallCircle(obj.x, obj.y - 95, "id", this.tweetContainer);
+        addSmallCircle(obj.x + 67, obj.y - 67, "id_str", this.tweetContainer);
+        addSmallCircle(obj.x + 95, obj.y, "created_at", this.tweetContainer);
+        addSmallCircle(obj.x + 67, obj.y + 67, "text", this.tweetContainer);
+        addSmallCircle(obj.x, obj.y + 95, "retweet_count", this.tweetContainer);
+        addSmallCircle(obj.x - 67, obj.y + 67, "in_reply_to_user_id_str", this.tweetContainer);
+        addSmallCircle(obj.x - 95, obj.y, "in_reply_to_status_id_str", this.tweetContainer);
+        addSmallCircle(obj.x - 67, obj.y - 67, "in_reply_to_screen_name", this.tweetContainer);
         
         this.stage.addChild(this.tweetContainer);
         this.stage.update();
@@ -516,14 +512,14 @@ export default {
       drawTwtEntityFields(event){
         var obj = event.target;
         
-        this.addBigCircle(obj.x + 300, obj.y, "user_mentions", "red");
-        this.addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.user_mentions);
+        addBigCircle(obj.x + 300, obj.y, "user_mentions", "red");
+        addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.user_mentions);
         
         this.twtEntityContainer = new createjs.Container();
         
         // 2 basic fields
-        this.addSmallCircle(obj.x, obj.y - 95, "urls", this.twtEntityContainer);
-        this.addSmallCircle(obj.x - 95, obj.y, "hashtags", this.twtEntityContainer);
+        addSmallCircle(obj.x, obj.y - 95, "urls", this.twtEntityContainer);
+        addSmallCircle(obj.x - 95, obj.y, "hashtags", this.twtEntityContainer);
         
         this.stage.addChild(this.twtEntityContainer);
         this.stage.update();
@@ -532,41 +528,41 @@ export default {
       drawRetweetFields(event){
         var obj = event.target;
         
-        this.addBigCircle(obj.x + 300, obj.y, "entities", "yellow");
-        this.addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.entities);
+        addBigCircle(obj.x + 300, obj.y, "entities", "yellow");
+        addArrow(obj.x + 65, obj.y, obj.x + 235, obj.y, this.entities);
         
-        this.addBigCircle(obj.x + 212, obj.y + 212, "retweeted_status", "#1e90ff");
-        this.addArrow(obj.x + 44, obj.y + 44, obj.x + 166, obj.y + 166, this.retweeted_status);
+        addBigCircle(obj.x + 212, obj.y + 212, "retweeted_status", "#1e90ff");
+        addArrow(obj.x + 44, obj.y + 44, obj.x + 166, obj.y + 166, this.retweeted_status);
         
-        this.addBigCircle(obj.x, obj.y + 300, "user", "red");
-        this.addArrow(obj.x, obj.y + 65, obj.x, obj.y + 235, this.user);
+        addBigCircle(obj.x, obj.y + 300, "user", "red");
+        addArrow(obj.x, obj.y + 65, obj.x, obj.y + 235, this.user);
         
         this.retweetContainer = new createjs.Container();
         
         // 9 basic fields
-        this.addSmallCircle(obj.x, obj.y - 95, "id", this.retweetContainer);
-        this.addSmallCircle(obj.x + 61, obj.y - 73, "id_str", this.retweetContainer);
-        this.addSmallCircle(obj.x + 94, obj.y - 16, "text", this.retweetContainer);
-        this.addSmallCircle(obj.x + 82, obj.y + 48, "created_at", this.retweetContainer);
-        this.addSmallCircle(obj.x + 32, obj.y + 89, "in_reply_to_status_id_str", this.retweetContainer);
-        this.addSmallCircle(obj.x - 32, obj.y + 89, "in_reply_to_user_id_str", this.retweetContainer);
-        this.addSmallCircle(obj.x - 82, obj.y + 48, "in_reply_to_screen_name", this.retweetContainer);
-        this.addSmallCircle(obj.x - 94, obj.y - 16, "favorite_count", this.retweetContainer);
-        this.addSmallCircle(obj.x - 61, obj.y - 73, "retweet_count", this.retweetContainer);
+        addSmallCircle(obj.x, obj.y - 95, "id", this.retweetContainer);
+        addSmallCircle(obj.x + 61, obj.y - 73, "id_str", this.retweetContainer);
+        addSmallCircle(obj.x + 94, obj.y - 16, "text", this.retweetContainer);
+        addSmallCircle(obj.x + 82, obj.y + 48, "created_at", this.retweetContainer);
+        addSmallCircle(obj.x + 32, obj.y + 89, "in_reply_to_status_id_str", this.retweetContainer);
+        addSmallCircle(obj.x - 32, obj.y + 89, "in_reply_to_user_id_str", this.retweetContainer);
+        addSmallCircle(obj.x - 82, obj.y + 48, "in_reply_to_screen_name", this.retweetContainer);
+        addSmallCircle(obj.x - 94, obj.y - 16, "favorite_count", this.retweetContainer);
+        addSmallCircle(obj.x - 61, obj.y - 73, "retweet_count", this.retweetContainer);
         
         this.stage.addChild(this.retweetContainer);
         this.stage.update();
       },
 
       resizeWidth(){
-        this.canvas = document.getElementById("myCanvas");
+        this.canvas = document.getElementById("mythis.canvas");
         this.canvas.width = 2 * this.canvas.width;
         this.currWidth = this.canvas.width;
         alert("width resize to " + this.currWidth);
       },
 
       resizeHeight(){
-        this.canvas = document.getElementById("myCanvas");
+        this.canvas = document.getElementById("mythis.canvas");
         this.canvas.height = 2 * this.canvas.height;
         this.currHeight = this.canvas.height;
         alert("height resize to " + this.currHeight);
@@ -645,9 +641,9 @@ export default {
         this.stage = new createjs.Stage("myCanvas");
         this.stage.enableMouseOver(10);
         
-        this.twtUserColor = "#ff1e90";
+        this.twtUserColor = "red";
         this.tweetColor = "#1e90ff";
-        this.twtGeoColor = "#ffff1e";
+        this.twtGeoColor = "brown";
         
         var rect0 = new createjs.Shape();
         rect0.on("click", this.handleClickQueryUser);
@@ -696,20 +692,17 @@ export default {
    
         this.stage.update();
         createjs.Ticker.addEventListener("tick", this.stage);
-        // this.$nextTick(function () {
-        //     console.log(this.twtUserColor) // => 'updated'
-        // });
+
       },
   }
 </script>
 
 <style scoped>
 
-canvas{
+this.canvas{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15px;
     border: 5px solid #d3d3d3;
 }
 

@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import BootstrapVue from 'bootstrap-vue';
+import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-awesome/icons/flag'
@@ -14,6 +14,7 @@ import Vuex from 'vuex'
 import * as VuexLocal from 'vuex-local'
 import store from './store'
 import VueResource from 'vue-resource'
+
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
