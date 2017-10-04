@@ -60,6 +60,11 @@ router.get('/isloggedIn', loggedIn, function(req, res){
     res.send(problem);
 });
 
+// router.get('/getRedisSessionID',function(req,res){
+//   var send = {status: 'OK', sessionID: req.sessionID};
+//   res.send(send);
+// });
+
 
 // router.get('/register', function(req,res){
 //   res.render('register');

@@ -1,12 +1,18 @@
 <!-- src/components/Graphql.vue -->
 <template>
   <div>
-    <div id="main">
+    <form class="form-signin" v-on:submit.prevent>
+        <h2 class="form-signin-heading">Please hit "Submit"</h2><br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" @click = "submitTwitter()">Submit for Twitter</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" @click = "submitReddit()">Submit for Reddit</button>
+    </form>
+<!--     <div id="main">
         <canvas id="myCanvas" width="1200" height="550"></canvas>
         
         <div id='user'>
-            <p>q: <input type='text' style="width: 40%;" @change="getKeyword(this.value)"/></p>
-            <p id="common">count: <input type='number' name='count' min='0' style="width: 25%;" value='3' @change="getCount(this.value)"/></p>
+            <p>q: <input type='text' style="width: 40%;" @change="getKeyword(this.getAttribute(value))"/></p>
+            <p id="common">count: <input id='fuck' type='number' name='count' min='0' style="width: 25%;" value='3' @change="getCount(document.getElementById('fuck').getAttribute('value'))"/></p>
             <p>page: <input type='number' name='page' min='0' style="width: 25%;" value='5' @change="getPage(this.value)"/></p>
         </div>
         
@@ -33,12 +39,12 @@
                 <option value="city">city</option>
                 <option value="admin">admin</option>
                 <option value="country">country</option></select></p>
-            <p>accuracy: <input type='text' style="width: 40%;" @change="getOptionalParas('accuracy:', this.value)"/></p>
+            <p>accuracy: <input type='text' style="width: 40%;" @change="('accuracy:', this.value)"/></p>
             <p>max_results: <input type='number' style="width: 25%;" @change="getOptionalParas('max_results:', this.value)"/></p>
-        </div>
+        </div> 
     </div>
   
-    <p id="string"></p>
+    <p id="string"></p>-->
   </div>
 </template>
 
@@ -93,10 +99,47 @@ export default {
          str: null,
 
          loginArray: {'facebook': false, 'twitter': false, 'flickr': false, 'spotify': false, 'reddit': false, 'youtube': false, 'tumblr': false},
+
+         query_string_twitter: `{twitter {queryUser(q: \"bill\", count: 4, pageNum: 1) {author_id, profile_image_url}}}`,
+         query_string_reddit: `{reddit{searchSubredditNames(query:"uiuc")}}`,
       }
     },
 
     methods: {
+        submitTwitter(){
+            this.$http.post('http://localhost:3000/twitterQuery',{query: this.query_string_twitter}).then(response=>{
+                if (response.body.status == 'OK'){
+                    alert(response.body.answer);
+                    console.log(response.body.answer);
+                    alert("The query file is successfully downloaded!");
+                }
+                else{
+                    alert("Looks like there is something wrong, try again!");
+                }
+            });
+        },
+
+        submitReddit(){
+            this.$http.post('http://localhost:3000/redditQuery',{query: this.query_string_reddit}).then(response=>{
+                if (response.body.status == 'OK'){
+                    alert(response.body.answer);
+                    console.log(response.body.answer);
+                    alert("The query file is successfully downloaded!");
+                }
+                else{
+                    alert("Looks like there is something wrong, try again!");
+                }
+            });
+        },
+
+        // sendrequest(){
+        //     this.$http.post('http://localhost:3000/getTwitterCred',{sessionID: this.sessionID, query: this.request_string}).then(response=>{
+        //         alert("result:");
+        //         alert(response.body.obj);
+        //         alert(response.body.twitter_AT);
+        //     });            
+        // },
+
 
       handleMouseOver(event){
         event.target.alpha = ((event.type=="mouseover") ? 0.75 : 0.5);
@@ -107,7 +150,6 @@ export default {
         this.stage.addChild(this.media, this.statica);
 
         var circle = new createjs.Shape();
-        console.log(this.twtUserColor); 
         circle.graphics.beginFill(this.twtUserColor).drawCircle(0, 0, 65);
         circle.x = 250;
         circle.y = 180;
@@ -246,7 +288,7 @@ export default {
                 this.timeline = new createjs.Container();
                 this.timeline.addChild(circle, label);
                 this.stage.addChild(this.timeline);
-                this.addParaCount(x,y);
+                this.addParaCount(x,y,name);
                 break;
             
             case "friends":
@@ -254,7 +296,7 @@ export default {
                 this.friends = new createjs.Container();
                 this.friends.addChild(circle, label);
                 this.stage.addChild(this.friends);
-                this.addParaCount(x,y);
+                this.addParaCount(x,y,name);
                 break;
                 
             case "followers":
@@ -262,7 +304,7 @@ export default {
                 this.followers = new createjs.Container();
                 this.followers.addChild(circle, label);
                 this.stage.addChild(this.followers);
-                this.addParaCount(x,y);
+                this.addParaCount(x,y,name);
                 break;
                 
             case "user":
@@ -284,7 +326,7 @@ export default {
                 this.retweet = new createjs.Container();
                 this.retweet.addChild(circle, label);
                 this.stage.addChild(this.retweet);
-                this.addParaCount(x,y);
+                this.addParaCount(x,y,name);
                 break;
                 
             case "user_mentions":
@@ -312,12 +354,13 @@ export default {
         }
       },
 
-      addParaCount(x, y){
+      addParaCount(x, y, name){
         var newele = this.queryUserParameters.cloneNode(false);
         newele.style.display = "inline";
         newele.style.left = ""+ (x-5) +"px";
         newele.style.top = ""+ (y+5) +"px";
         var cl = this.count.cloneNode(false);
+        cl.id += name
         var txtNode = document.createTextNode("count:");
         var ipt = document.createElement("INPUT");
         ipt.setAttribute("type", "number");
@@ -329,10 +372,6 @@ export default {
         cl.appendChild(ipt);
         newele.appendChild(cl);
         this.main.appendChild(newele);
-      },
-
-      getCount(value){
-        
       },
 
       addArrow(fromx, fromy, tox, toy, container){
@@ -581,12 +620,13 @@ export default {
       },
 
       getCount(val){
-        this.s = document.getElementById("string");
-        this.str = this.s.innerHTML;
-        var before = this.str.indexOf("count:");
-        var after = this.str.indexOf(" page:");
-        this.s.innerHTML = this.str.substring(0, before+6) + val + this.str.substring(after);
-        
+        // this.s = document.getElementById("string");
+        // this.str = this.s.innerHTML;
+        // var before = this.str.indexOf("count:");
+        // var after = this.str.indexOf(" page:");
+        // this.s.innerHTML = this.str.substring(0, before+6) + val + this.str.substring(after);
+        alert("fuck!");
+        alert(val);
       },
 
       getPage(val){
@@ -629,77 +669,77 @@ export default {
 
     },
 
-    mounted: function(){
-        this.currWidth = 1200;
-        this.currHeight = 550;
-        this.canvas = document.getElementById("myCanvas");
+    // mounted: function(){
+    //     this.currWidth = 1200;
+    //     this.currHeight = 550;
+    //     this.canvas = document.getElementById("myCanvas");
         
-        this.count = document.getElementById("common");
+    //     this.count = document.getElementById("common");
         
-        this.queryUserParameters = document.getElementById("user");
-        this.queryTweetParameters = document.getElementById("tweet");
-        this.queryGeoParameters = document.getElementById("geo");
+    //     this.queryUserParameters = document.getElementById("user");
+    //     this.queryTweetParameters = document.getElementById("tweet");
+    //     this.queryGeoParameters = document.getElementById("geo");
         
-        this.main = document.getElementById("main");
+    //     this.main = document.getElementById("main");
         
-        this.stage = new createjs.Stage("myCanvas");
-        this.stage.enableMouseOver(10);
+    //     this.stage = new createjs.Stage("myCanvas");
+    //     this.stage.enableMouseOver(10);
         
-        this.twtUserColor = "#ff1e90";
-        this.tweetColor = "#1e90ff";
-        this.twtGeoColor = "#ffff1e";
+    //     this.twtUserColor = "#ff1e90";
+    //     this.tweetColor = "#1e90ff";
+    //     this.twtGeoColor = "#ffff1e";
         
-        var rect0 = new createjs.Shape();
-        rect0.on("click", this.handleClickQueryUser);
-        var rect1 = new createjs.Shape();
-        rect1.on("click", this.handleClickQueryTweet);
-        var rect2 = new createjs.Shape();
-        rect2.on("click", this.handleClickQueryGeo);
+    //     var rect0 = new createjs.Shape();
+    //     rect0.on("click", this.handleClickQueryUser);
+    //     var rect1 = new createjs.Shape();
+    //     rect1.on("click", this.handleClickQueryTweet);
+    //     var rect2 = new createjs.Shape();
+    //     rect2.on("click", this.handleClickQueryGeo);
         
-        this.statica = new createjs.Container();
+    //     this.statica = new createjs.Container();
         
-        this.rects = [rect0, rect1, rect2];
-        for(var i = 0; i < this.rects.length; i++){
-            this.rects[i].x = 160 + 150 * i;
-            this.rects[i].y = 20;
-            this.rects[i].graphics.beginFill("blue").drawRect(0, 0, 100, 50);
-            this.rects[i].alpha = 0.4;
-            this.statica.addChild(this.rects[i]);
-        }
+    //     this.rects = [rect0, rect1, rect2];
+    //     for(var i = 0; i < this.rects.length; i++){
+    //         this.rects[i].x = 160 + 150 * i;
+    //         this.rects[i].y = 20;
+    //         this.rects[i].graphics.beginFill("blue").drawRect(0, 0, 100, 50);
+    //         this.rects[i].alpha = 0.4;
+    //         this.statica.addChild(this.rects[i]);
+    //     }
         
-        var label0 = new createjs.Text("queryUser", "20px Arial", "black");
-        var label1 = new createjs.Text("queryTweet", "19px Arial", "black");
-        var label2 = new createjs.Text("queryGeo", "20px Arial", "black");
-        this.labels = [label0, label1, label2];
-        for(var i = 0; i < this.rects.length; i++){
-            this.labels[i].x = this.rects[i].x;
-            this.labels[i].y = this.rects[i].y + 10;
-            this.statica.addChild(this.labels[i]);
-        }
+    //     var label0 = new createjs.Text("queryUser", "20px Arial", "black");
+    //     var label1 = new createjs.Text("queryTweet", "19px Arial", "black");
+    //     var label2 = new createjs.Text("queryGeo", "20px Arial", "black");
+    //     this.labels = [label0, label1, label2];
+    //     for(var i = 0; i < this.rects.length; i++){
+    //         this.labels[i].x = this.rects[i].x;
+    //         this.labels[i].y = this.rects[i].y + 10;
+    //         this.statica.addChild(this.labels[i]);
+    //     }
         
-        this.stage.addChild(this.statica);
+    //     this.stage.addChild(this.statica);
         
-        this.txt = "{twitter{ }}";
-        this.mid = " ";
+    //     this.txt = "{twitter{ }}";
+    //     this.mid = " ";
         
-        this.media = new createjs.Text("stackExchange\n\nmediaWiki\n\ninstagram\n\npinterest\n\ntwitter\n\nfacebook\n\nflickr\n\nspotify\n\nyoutube\n\nreddit\n\nweibo\n\ntumblr", "15px Arial", "black");
-        this.media.x = 20;
-        this.media.y = 120;
+    //     this.media = new createjs.Text("stackExchange\n\nmediaWiki\n\ninstagram\n\npinterest\n\ntwitter\n\nfacebook\n\nflickr\n\nspotify\n\nyoutube\n\nreddit\n\nweibo\n\ntumblr", "15px Arial", "black");
+    //     this.media.x = 20;
+    //     this.media.y = 120;
         
-        // display query string below canvas
-        this.para = document.getElementById("string");
-        var txtNode = document.createTextNode(this.txt);
-        this.para.appendChild(txtNode);
-        this.main.appendChild(this.para);
+    //     // display query string below canvas
+    //     this.para = document.getElementById("string");
+    //     var txtNode = document.createTextNode(this.txt);
+    //     this.para.appendChild(txtNode);
+    //     this.main.appendChild(this.para);
             
-        this.stage.addChild(this.media);
+    //     this.stage.addChild(this.media);
    
-        this.stage.update();
-        createjs.Ticker.addEventListener("tick", this.stage);
-        // this.$nextTick(function () {
-        //     console.log(this.twtUserColor) // => 'updated'
-        // });
-      },
+    //     this.stage.update();
+    //     createjs.Ticker.addEventListener("tick", this.stage);
+    //     // this.$nextTick(function () {
+    //     //     console.log(this.twtUserColor) // => 'updated'
+    //     // });
+    //   },
   }
 </script>
 
